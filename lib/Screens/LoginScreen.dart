@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_forward_extended/Components/RoundedButton.dart';
 import '../Components/formField.dart';
 import '../Constants.dart' as constants;
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'Weather.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,9 +14,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late String email, password;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final _auth = FirebaseAuth.instance;
+
     return Scaffold(
       backgroundColor: constants.nightPrimary,
       body: Column(
@@ -33,8 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: size.width * 0.75,
                   child: formField(
                     size: size,
-                    text: 'Username',
+                    text: 'E-mail',
                     password: false,
+                    onChanged: (value) {
+                      email = value;
+                    },
                   ),
                 ),
                 SizedBox(
@@ -43,6 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     size: size,
                     text: 'Password',
                     password: true,
+                    onChanged: (value) {
+                      password = value;
+                    },
                   ),
                 ),
                 SizedBox(
@@ -52,7 +65,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: size.height * 0.07,
                   child: RoundedButton(
                     text: 'Login',
-                    press: () {},
+                    press: () async {
+                      try {
+                        final newUser = await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                        print(newUser.toString());
+                        if (newUser != null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Weather()));
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     color: constants.dayPrimary,
                     textColor: constants.nightPrimary,
                     length: size * 0.55,
