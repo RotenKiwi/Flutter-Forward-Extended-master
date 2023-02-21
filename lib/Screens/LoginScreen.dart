@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final _auth = FirebaseAuth.instance;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: constants.nightPrimary,
       body: Column(
         children: [
@@ -69,15 +70,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       try {
                         final newUser = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
-                        print(newUser.toString());
+                        debugPrint(newUser.toString());
                         if (newUser != null) {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Weather()));
+                                  builder: (context) => const Weather()));
                         }
-                      } catch (e) {
-                        print(e);
+                      } catch (e, s) {
+                        debugPrint('$e');
+                        debugPrint('$s');
                       }
                     },
                     color: constants.dayPrimary,

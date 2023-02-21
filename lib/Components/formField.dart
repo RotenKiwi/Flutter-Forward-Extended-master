@@ -17,16 +17,17 @@ class formField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: TextField(
         onChanged: onChanged,
-        style: TextStyle(
+        style: const TextStyle(
           color: constants.dayPrimary,
         ),
         obscureText: password,
         decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(
                 color: constants.dayPrimary,
                 width: 2,
                 style: BorderStyle.solid),
