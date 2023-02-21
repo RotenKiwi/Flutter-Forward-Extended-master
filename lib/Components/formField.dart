@@ -4,14 +4,14 @@ import '../Constants.dart' as constants;
 class formField extends StatelessWidget {
   final String text;
   final Size size;
-  final bool password;
+  final bool isPassword;
   final Function(String) onChanged;
 
   const formField({
     super.key,
     required this.size,
     required this.text,
-    required this.password, required this.onChanged,
+    required this.isPassword, required this.onChanged,
   });
 
   @override
@@ -19,11 +19,11 @@ class formField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: TextField(
-        onChanged: onChanged,
+        onSubmitted: onChanged,
         style: const TextStyle(
           color: constants.dayPrimary,
         ),
-        obscureText: password,
+        obscureText: isPassword,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
