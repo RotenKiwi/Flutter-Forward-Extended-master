@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final _auth = FirebaseAuth.instance;
+    final auth = FirebaseAuth.instance;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -71,14 +71,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       try {
                         var location = await determinePosition();
                         debugPrint('latitude: ${location.latitude} and longitude: ${location.longitude}');
-                        final newUser = await _auth.signInWithEmailAndPassword(
+                        final newUser = await auth.signInWithEmailAndPassword(
                             email: email, password: password);
                         debugPrint(newUser.toString());
-                        if (newUser != null) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Weather()));
+                        if (newUser.user != null) {
+                          _pushToNextScreen();
                         }
                       } catch (e, s) {
                         debugPrint('$e');
@@ -106,5 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  _pushToNextScreen(){
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const Weather()));
   }
 }
