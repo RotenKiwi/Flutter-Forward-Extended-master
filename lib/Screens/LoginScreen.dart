@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: formField(
                     size: size,
                     text: 'E-mail',
-                    password: false,
+                    isPassword: false,
                     onChanged: (value) {
                       email = value;
                     },
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: formField(
                     size: size,
                     text: 'Password',
-                    password: true,
+                    isPassword: true,
                     onChanged: (value) {
                       password = value;
                     },
