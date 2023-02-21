@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_forward_extended/Components/RoundedButton.dart';
+import 'package:flutter_forward_extended/Network/Location.dart';
 import '../Components/formField.dart';
 import '../Constants.dart' as constants;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,6 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: 'Login',
                     press: () async {
                       try {
+                        var location = await determinePosition();
+                        debugPrint('latitude: ${location.latitude} and longitude: ${location.longitude}');
                         final newUser = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
                         debugPrint(newUser.toString());
