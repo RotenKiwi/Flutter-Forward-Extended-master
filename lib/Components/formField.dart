@@ -19,6 +19,7 @@ class formField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: TextField(
+        autofocus: true,
         onSubmitted: onChanged,
         style: const TextStyle(
           color: constants.dayPrimary,
@@ -37,6 +38,7 @@ class formField extends StatelessWidget {
             color: constants.dayPrimaryFade,
             fontSize: size.width * 0.04,
             fontWeight: FontWeight.w500,
+            fontStyle: FontStyle.italic,
             fontFamily: 'Poppins',
           ),
         ),
