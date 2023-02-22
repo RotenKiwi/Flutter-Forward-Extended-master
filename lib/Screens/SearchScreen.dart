@@ -85,6 +85,6 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   _pushToNewScreen(){
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const Weather()), (route) => false);
+    //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const Weather()), (route) => false);
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_forward_extended/Network/api_response.dart';
 import '../Components/extraInfo.dart';
 import '../Constants.dart' as constants;
 
 class Weather extends StatefulWidget {
-  const Weather({Key? key}) : super(key: key);
+  const Weather({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Weather> createState() => _WeatherState();
@@ -20,21 +23,25 @@ class _WeatherState extends State<Weather> {
         children: [
           Positioned(
             top: size.height * 0.15,
-            child: Text(
-              'Location',
-              style: TextStyle(
-                fontSize: size.width * 0.1,
-                fontWeight: FontWeight.w400,
-                //fontFamily: 'SpaceMono',
-                color: constants.nightPrimary,
-                decoration: TextDecoration.none,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                '${constants.apiInstance.city}',
+                style: TextStyle(
+                  fontSize: size.width * 0.1,
+                  fontWeight: FontWeight.w400,
+                  //fontFamily: 'SpaceMono',
+                  color: constants.nightPrimary,
+                  decoration: TextDecoration.none,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
           Positioned(
             top: size.height * 0.195,
             child: Text(
-              'Day & Time',
+              constants.apiInstance.date,
               style: TextStyle(
                 fontSize: size.width * 0.07,
                 fontWeight: FontWeight.w400,
@@ -46,10 +53,12 @@ class _WeatherState extends State<Weather> {
           ),
           Positioned(
             top: size.height * 0.3,
-            child: Container(
+            child: SizedBox(
               width: size.width * 0.6,
               height: size.height * 0.23,
-              color: Colors.greenAccent,
+              child: Image.network(
+                  'http://openweathermap.org/img/wn/${constants.apiInstance.icon}@2x.png',
+              scale: 0.01,),
             ),
           ),
           Positioned(
@@ -57,7 +66,7 @@ class _WeatherState extends State<Weather> {
               child: Column(
                 children: [
                   Text(
-                    '22 c',
+                    '${constants.apiInstance.temp}°c',
                     style: TextStyle(
                       fontFamily: 'SpaceMono',
                       fontWeight: FontWeight.w600,
@@ -67,7 +76,7 @@ class _WeatherState extends State<Weather> {
                     ),
                   ),
                   Text(
-                    'Weather desc',
+                    '${constants.apiInstance.tempType}, ${constants.apiInstance.tempDescp}',
                     style: TextStyle(
                       fontFamily: 'SpaceMono',
                       fontWeight: FontWeight.w400,
@@ -77,7 +86,7 @@ class _WeatherState extends State<Weather> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: size.height*0.05),
+                    padding: EdgeInsets.only(top: size.height * 0.05),
                     child: Container(
                       width: 120,
                       color: constants.nightPrimary,
@@ -94,7 +103,7 @@ class _WeatherState extends State<Weather> {
                   size: size,
                   icon: Icons.thermostat,
                   infoName: 'Max Temp',
-                  value: 'value',
+                  value: '${constants.apiInstance.maxTemp}°c',
                 ),
                 Container(
                   width: 1,
@@ -105,7 +114,7 @@ class _WeatherState extends State<Weather> {
                   size: size,
                   icon: Icons.air_outlined,
                   infoName: 'Windspeed',
-                  value: 'value',
+                  value: '${constants.apiInstance.airSpeed.toString()} m/s',
                 ),
                 Container(
                   width: 1,
@@ -116,7 +125,7 @@ class _WeatherState extends State<Weather> {
                   size: size,
                   icon: Icons.percent,
                   infoName: 'Humidity',
-                  value: 'value',
+                  value: constants.apiInstance.humidity.toString(),
                 )
               ],
             ),

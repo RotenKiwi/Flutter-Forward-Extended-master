@@ -56,7 +56,7 @@ class ApiResponse with ChangeNotifier{
   late int aqi; // Air quality Index
   late String icon; // Icon of the current weather
   late String country; // name of the country
-  late double maxTemp; // max Temp for the day
+  late int maxTemp; // max Temp for the day
   late double minTemp; // min Temp for the day
   late String tempDescp; //description about the temperature
   late int timezone; // timezone of the said city
@@ -65,7 +65,7 @@ class ApiResponse with ChangeNotifier{
   late String date; //date of the said city
 
 
-  Future<void> getLocation(String latitude, String longitude) async {
+  Future<int> getLocation(String latitude, String longitude) async {
 
     //declared the main url
     String uri = 'api.openweathermap.org';
@@ -91,8 +91,16 @@ class ApiResponse with ChangeNotifier{
     //to parse the data
     Map data = jsonDecode(response.body);
 
-    // getting timezone(Shift in seconds from UTC)
-    timezone = data['timezone'];
+    //getting time from the said timezone
+    DateTime dateTime = DateTime.now();
+    date = DateFormat.yMMMEd().format(dateTime);
+
+    // getting temp description, icon
+    List weather = data['weather'];
+    Map weatherData = weather[0];
+    tempType = weatherData['main'];
+    tempDescp = weatherData['description'];
+    icon = weatherData['icon'];
 
     //getting city
     city = data['name'];
@@ -105,23 +113,15 @@ class ApiResponse with ChangeNotifier{
     Map mainData = data['main'];
     temp = mainData['temp'];
     humidity = mainData['humidity'];
-    minTemp = mainData['temp_min'];
-    maxTemp = mainData['temp_max'];
+    maxTemp = mainData['temp_max'].round();
 
-    // getting temp description, icon
-    List weather = data['weather'];
-    Map weatherData = weather[0];
-    tempType = weatherData['main'];
-    tempDescp = weatherData['description'];
-    icon = weatherData['icon'];
 
     // getting wind speed(m/s)
     Map speed = data['wind'];
     airSpeed = speed['speed'];
 
-    //getting time from the said timezone
-    DateTime dateTime = DateTime.now().add(Duration(seconds: timezone - DateTime.now().timeZoneOffset.inSeconds));
-    date = DateFormat.yMMMEd().add_jm().format(dateTime);
+    return 1;
+
   }
 
 }

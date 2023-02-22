@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_forward_extended/Components/RoundedButton.dart';
+import 'package:flutter_forward_extended/Network/Location.dart';
 import '../Components/formField.dart';
 import '../Constants.dart' as constants;
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../Network/api_response.dart';
 import 'Weather.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -15,6 +19,19 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late String email, password;
+int myvar = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    apiCall();
+  }
+
+  void apiCall() async {
+    var location = await determinePosition();
+     myvar = await constants.apiInstance.getLocation(
+        location.latitude.toString(), location.longitude.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: 'Login',
                       press: () async {
                         try {
-                          final newUser = await _auth.signInWithEmailAndPassword(
-                              email: email, password: password);
-                          print(newUser.toString());
-                          if (newUser != null) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Weather()));
+                          final newUser =
+                              await _auth.signInWithEmailAndPassword(
+                                  email: email, password: password);
+                          //print(newUser.toString());
+
+                          if (newUser.user != null && myvar != 0) {
+                            _pushToNextScreen();
                           }
                         } catch (e) {
                           print(e);
@@ -105,5 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  _pushToNextScreen(){
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Weather()));
   }
 }
