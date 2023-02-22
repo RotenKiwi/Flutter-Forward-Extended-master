@@ -56,7 +56,7 @@ class ApiResponse with ChangeNotifier{
   late int aqi; // Air quality Index
   late String icon; // Icon of the current weather
   late String country; // name of the country
-  late int maxTemp; // max Temp for the day
+  late double maxTemp; // max Temp for the day
   late double minTemp; // min Temp for the day
   late String tempDescp; //description about the temperature
   late int timezone; // timezone of the said city
@@ -113,7 +113,7 @@ class ApiResponse with ChangeNotifier{
     Map mainData = data['main'];
     temp = mainData['temp'];
     humidity = mainData['humidity'];
-    maxTemp = mainData['temp_max'].round();
+    maxTemp = mainData['temp_max'].toDouble();
 
 
     // getting wind speed(m/s)

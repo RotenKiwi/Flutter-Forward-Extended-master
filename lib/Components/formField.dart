@@ -19,7 +19,6 @@ class formField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: TextField(
-        autofocus: true,
         onChanged: onChanged,
         style: const TextStyle(
           color: constants.dayPrimary,
