@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_forward_extended/Screens/SearchScreen.dart';
+import 'package:flutter_forward_extended/Screens/Weather.dart';
 import 'Screens/LoginScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: Weather(),
     );
   }
 }

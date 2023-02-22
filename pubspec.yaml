@@ -64,6 +64,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+  fonts:
+    - family: SpaceMono
+      fonts:
+        - asset: assets/Fonts/SpaceMono-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
