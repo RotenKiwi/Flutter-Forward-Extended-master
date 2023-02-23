@@ -96,7 +96,7 @@ int myvar = 0;
                             _pushToNextScreen();
                           }
                         } catch (e) {
-                          print(e);
+                          debugPrint('$e');
                         }
                       },
                       color: constants.dayPrimary,
